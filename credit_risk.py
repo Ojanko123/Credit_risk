@@ -216,7 +216,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"\nTraining set: {X_train.shape}, Test set: {X_test.shape}")
  
 # --- Fit Logistic Regression ---
-lr = LogisticRegression(max_iter=1000, random_state=42)   #to random state ti einai
+lr = LogisticRegression(max_iter=1000, random_state=42)  
 lr.fit(X_train, y_train)
  
 # --- Predictions ---
