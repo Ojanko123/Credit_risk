@@ -172,7 +172,7 @@ selected_features = iv_df[iv_df['IV'] > 0.02].index.tolist()
 print(f"\nSelected features (IV > 0.02): {selected_features}")
  
 # Plot IV values
-plt.figure(figsize=(10, 6))     ####to skeptiko pisw apo tin seira twn entolwn?
+plt.figure(figsize=(10, 6))    
 iv_df[iv_df['IV'] > 0.02]['IV'].sort_values().plot(kind='barh', color='steelblue')
 plt.title('Information Value by Feature', fontsize=14)
 plt.xlabel('Information Value')
