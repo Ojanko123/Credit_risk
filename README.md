@@ -112,17 +112,15 @@ A Kolmogorov-Smirnov test was applied to the score distribution to formally test
 
 Population Stability Index compares the distribution of predicted default probabilities between training and test populations:
 
-```
+
 PSI = Σ (Actual% - Expected%) × ln(Actual% / Expected%)
-```
+
 
 | PSI | Interpretation |
 |---|---|
 | < 0.10 | Stable — no action needed |
 | 0.10 – 0.20 | Moderate drift — monitor |
 | > 0.20 | Significant shift — retrain model |
-
-PSI is a critical component of model risk management in real bank deployments — it detects when changing economic conditions have made the model unreliable.
 
 ---
 
@@ -169,4 +167,4 @@ python credit_risk.py
 
 **Oresti Janko**
 BSc Statistics and Insurance Science — University of Piraeus
-Focus: Credit risk modelling, statistical analysis, Python, SQL
+Focus: Credit risk modelling, statistical analysis, Python, 
