@@ -1,4 +1,4 @@
-# Credit Risk Model — PD Modelling & Scorecard (Python)
+# Credit Risk Model - PD Modelling & Scorecard (Python)
 
 ## Overview
 
