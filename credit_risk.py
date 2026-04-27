@@ -193,9 +193,8 @@ print(f"              has_pub_rec, has_delinq, high_inq, high_revol_util,")
 print(f"              issue_month, issue_quarter")
 print(f"\nShape after feature engineering: {loans.shape}")
 
-# =============================================================
+
 # PHASE 4 - WoE & INFORMATION VALUE
-# =============================================================
 print("\n" + "=" * 60)
 print("PHASE 4 — WoE & INFORMATION VALUE")
 print("=" * 60)
@@ -431,7 +430,6 @@ plt.xlabel('Predicted')
 plt.tight_layout()
 plt.savefig('confusion_matrix_xgb.png', dpi=150)
 plt.show()
-print("Chart saved: confusion_matrix_xgb.png")
 
 # XGBoost Feature Importance
 importances = pd.Series(
@@ -447,7 +445,6 @@ plt.xlabel('Importance Score')
 plt.tight_layout()
 plt.savefig('xgb_feature_importance.png', dpi=150)
 plt.show()
-print("Chart saved: xgb_feature_importance.png")
 
 #################################
 # PHASE 7 - MODEL COMPARISON
@@ -473,7 +470,6 @@ plt.legend()
 plt.tight_layout()
 plt.savefig('roc_curve.png', dpi=150)
 plt.show()
-print("Chart saved: roc_curve.png")
 
 print(f"\nLogistic Regression AUC (WoE):   {lr_auc:.4f}")
 print(f"XGBoost AUC (Raw features):       {xgb_auc:.4f}")
@@ -483,10 +479,7 @@ print(f"Best model: {winner}")
 ############################################################
 # PHASE 8 - CREDIT SCORECARD SCALING (Logistic Regression)
 ############################################################
-print("\n" + "=" * 60)
 print("PHASE 8 — CREDIT SCORECARD SCALING")
-print("=" * 60)
-
 # Convert predicted probabilities to credit scores (300-850 scale)
 # Industry-standard PDO (Points to Double the Odds) formula:
 # Score = Offset + Factor * log-odds
