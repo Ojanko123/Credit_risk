@@ -1,5 +1,4 @@
-######################################################################
-# CREDIT RISK MODEL — LendingClub Dataset (Final Version)
+# CREDIT RISK MODEL - LendingClub Dataset (Final Version)
 # Methodology:
 # Logistic Regression: WoE encoded features (industry standard)
 # XGBoost: Raw features with Label Encoding (better performance)
@@ -13,7 +12,7 @@
 # 6. XGBoost PD Model (Raw features)
 # 7. Model Comparison
 # 8. Credit Scorecard Scaling (Logistic Regression)
-# 9. PSI — Model Stability Monitoring
+# 9. PSI - Model Stability Monitoring
 #####################################################################
 
 import pandas as pd
@@ -33,9 +32,9 @@ import warnings
 warnings.filterwarnings('ignore')
 
 #########################################
-# PHASE 1 — DATA LOADING & EXPLORATION
+# PHASE 1 - DATA LOADING & EXPLORATION
 #########################################
-print("PHASE 1 — DATA LOADING & EXPLORATION")
+print("PHASE 1 - DATA LOADING & EXPLORATION")
 
 loans = pd.read_csv("C:\\Users\\ojank\\Desktop\\SQL\\lc_2016_2017.csv",
                     low_memory=False)
@@ -45,9 +44,9 @@ print("\nLoan Status value counts:")
 print(loans['loan_status'].value_counts())
 
 ############################################
-# PHASE 2 — DATA CLEANING & PREPROCESSING
+# PHASE 2 - DATA CLEANING & PREPROCESSING
 ############################################
-print("PHASE 2 — DATA CLEANING & PREPROCESSING")
+print("PHASE 2 - DATA CLEANING & PREPROCESSING")
 
 # Step 1: Keep only relevant columns
 #Keeping all the 72 columns at this point is not helpful so I will try to keep those with predictive value to my model  
@@ -146,7 +145,7 @@ print("\nData types after cleaning:")
 print(loans.dtypes)
 
 ################################
-# PHASE 3 — FEATURE ENGINEERING
+# PHASE 3 - FEATURE ENGINEERING
 ################################
 print("PHASE 3 — FEATURE ENGINEERING")
 
@@ -195,7 +194,7 @@ print(f"              issue_month, issue_quarter")
 print(f"\nShape after feature engineering: {loans.shape}")
 
 # =============================================================
-# PHASE 4 — WoE & INFORMATION VALUE
+# PHASE 4 - WoE & INFORMATION VALUE
 # =============================================================
 print("\n" + "=" * 60)
 print("PHASE 4 — WoE & INFORMATION VALUE")
@@ -275,7 +274,7 @@ plt.show()
 
 
 #######################################################
-# PHASE 5 — LOGISTIC REGRESSION (WoE Encoded Features)
+# PHASE 5 - LOGISTIC REGRESSION (WoE Encoded Features)
 #######################################################
 print("PHASE 5 — LOGISTIC REGRESSION (WoE Features)")
 
@@ -326,7 +325,7 @@ lr_auc   = roc_auc_score(y_test_woe, lr_probs)
 print(f"\nLogistic Regression AUC: {lr_auc:.4f}")
 print("\nClassification Report:")
 print(classification_report(y_test_woe, lr_preds))
-# --- Statsmodels summary (statistical output) ---
+# Statsmodels summary (statistical output)
 # This gives us the R-style output: coefficients, std errors,
 # z-scores, p-values and Pseudo R² — same as glm() in R
 
@@ -336,7 +335,7 @@ logit_model = sm.Logit(y_train_woe, X_train_sm)
 result = logit_model.fit(method='lbfgs', maxiter=1000)
 print(result.summary())
 
-# --- Odds Ratios ---
+# Odds Ratios
 # Exponentiate the coefficients to get odds ratios
 # An odds ratio > 1 means the feature increases default probability
 # An odds ratio < 1 means the feature decreases default probability
@@ -393,7 +392,7 @@ X_train_raw, X_test_raw, y_train_raw, y_test_raw = train_test_split(
 
 print(f"Training set: {X_train_raw.shape}, Test set: {X_test_raw.shape}")
 
-# --- Fit XGBoost ---
+# Fit XGBoost
 neg_count = (y_train_raw == 0).sum()
 pos_count = (y_train_raw == 1).sum()
 scale     = neg_count / pos_count
@@ -451,7 +450,7 @@ plt.show()
 print("Chart saved: xgb_feature_importance.png")
 
 #################################
-# PHASE 7 — MODEL COMPARISON
+# PHASE 7 - MODEL COMPARISON
 #################################
 print("\n" + "=" * 60)
 print("PHASE 7 — MODEL COMPARISON")
@@ -482,7 +481,7 @@ winner = "XGBoost" if xgb_auc > lr_auc else "Logistic Regression"
 print(f"Best model: {winner}")
 
 ############################################################
-# PHASE 8 — CREDIT SCORECARD SCALING (Logistic Regression)
+# PHASE 8 - CREDIT SCORECARD SCALING (Logistic Regression)
 ############################################################
 print("\n" + "=" * 60)
 print("PHASE 8 — CREDIT SCORECARD SCALING")
