@@ -85,11 +85,11 @@ WoE encoding applied to all selected features before modelling, enforcing monoto
 Reporting odds ratios and p-values connects the model to the statistical theory 
 underlying logistic regression and mirrors the output expected in regulated 
 environments.
--**Example interpretation:** An odds ratio > 1 for a WoE-encoded feature means 
+- **Example interpretation:** An odds ratio > 1 for a WoE-encoded feature means 
 higher values of that feature increase the odds of default. An odds ratio < 1 
 means higher values reduce default probability. Features with p-value > 0.05 
 are not statistically significant at the 95% confidence level.
- -**AUC: 0.6933**
+ - **AUC: 0.6933**
 
 ### Phase 6 — XGBoost (Raw Features)
 
