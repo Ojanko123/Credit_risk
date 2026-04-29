@@ -81,10 +81,6 @@ WoE encoding applied to all selected features before modelling, enforcing monoto
 - 80/20 train/test split with stratification
 - Evaluated with AUC, ROC curve, and confusion matrix
 - Fitted a Logistic regression with a more statistical output.
-- **Why this matters:** Most machine learning pipelines only report AUC and accuracy. 
-Reporting odds ratios and p-values connects the model to the statistical theory 
-underlying logistic regression and mirrors the output expected in regulated 
-environments.
 - **Example interpretation:** An odds ratio > 1 for a WoE-encoded feature means 
 higher values of that feature increase the odds of default. An odds ratio < 1 
 means higher values reduce default probability. Features with p-value > 0.05 
