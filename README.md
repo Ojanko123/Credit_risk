@@ -44,10 +44,10 @@ Loaded 759,338 loan records and examined the distribution of loan statuses to un
 **Target variable definition:**
 - 0 = Fully Paid (good borrower)
 - 1 = Charged Off / Default / Late 16+ days (bad borrower)
-- Removed "Current" loans — outcome unknown, cannot be labelled
+- Removed "Current" loans because the outcome is unknown, cannot be labelled
 
 **Missing value treatment:**
-- Numeric columns → filled with **5% trimmed mean** (removes top and bottom 2.5% of values before averaging — more robust than mean against outliers, more informative than median)
+- Numeric columns → filled with **5% trimmed mean** (removes top and bottom 2.5% of values before averaging, more robust than mean against outliers, more informative than median)
 - Categorical columns → filled with mode (most frequent value)
 
 **Text cleaning:** `emp_length` converted from strings ("10+ years") to integers. `int_rate` and `revol_util` stripped of `%` and converted to float.
