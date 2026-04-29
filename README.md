@@ -32,10 +32,10 @@ This project directly addresses real-world credit risk questions:
 
 ## Methodology
 
-### Phase 1 — Data Loading & Exploration
+### Phase 1 - Data Loading & Exploration
 Loaded 759,338 loan records and examined the distribution of loan statuses to understand the composition of the dataset before any modelling decisions.
 
-### Phase 2 — Data Cleaning & Preprocessing
+### Phase 2 - Data Cleaning & Preprocessing
 
 **Column selection:** Reduced 72 columns to 19 features based on two criteria:
 - Available at loan application time (no data leakage from post-approval columns)
@@ -52,7 +52,7 @@ Loaded 759,338 loan records and examined the distribution of loan statuses to un
 
 **Text cleaning:** `emp_length` converted from strings ("10+ years") to integers. `int_rate` and `revol_util` stripped of `%` and converted to float.
 
-### Phase 3 — Feature Engineering
+### Phase 3 - Feature Engineering
 
 Seven new features were created from existing columns to capture relationships the raw variables couldn't express alone:
 
@@ -68,13 +68,13 @@ Seven new features were created from existing columns to capture relationships t
 | `issue_month` | from issue_d | Seasonality — month of loan issue |
 | `issue_quarter` | from issue_d | Seasonality — quarter of loan issue |
 
-### Phase 4 — WoE & Information Value
+### Phase 4 - WoE & Information Value
 
 Weight of Evidence (WoE) transforms each feature to measure how strongly each group of borrowers predicts default vs non-default. Information Value (IV) summarizes total predictive power.
 
 Features with IV < 0.02 were excluded. This step applies only to the Logistic Regression pipeline.
 
-### Phase 5 — Logistic Regression (WoE Features)
+### Phase 5 - Logistic Regression (WoE Features)
 
 WoE encoding applied to all selected features before modelling, enforcing monotonic relationships with default probability — a regulatory requirement in real bank models.
 
@@ -91,23 +91,23 @@ means higher values reduce default probability. Features with p-value > 0.05
 are not statistically significant at the 95% confidence level.
  - **AUC: 0.6933**
 
-### Phase 6 — XGBoost (Raw Features)
+### Phase 6 - XGBoost (Raw Features)
 
 XGBoost was trained on raw features with Label Encoding instead of WoE. This allows the model to find its own optimal splits rather than being constrained by WoE bins, which is why it outperforms logistic regression on AUC.
 
 Key parameters:
-- `n_estimators=300` — 300 sequential decision trees
-- `max_depth=5` — depth of each tree
-- `scale_pos_weight` — handles class imbalance natively
-- `subsample=0.8` — 80% of rows per tree (prevents overfitting)
-- `colsample_bytree=0.8` — 80% of features per tree (prevents overfitting)
+- `n_estimators=300` - 300 sequential decision trees
+- `max_depth=5` - depth of each tree
+- `scale_pos_weight` - handles class imbalance natively
+- `subsample=0.8` - 80% of rows per tree (prevents overfitting)
+- `colsample_bytree=0.8` - 80% of features per tree (prevents overfitting)
 - **AUC: 0.7100**
 
-### Phase 7 — Model Comparison
+### Phase 7 - Model Comparison
 
-Both models evaluated side by side on ROC curve and confusion matrix. XGBoost catches significantly more actual defaulters (higher recall on class 1) at the cost of more false positives — a trade-off that is acceptable in credit risk since missing a defaulter is far more costly than rejecting a good customer.
+Both models evaluated side by side on ROC curve and confusion matrix. XGBoost catches significantly more actual defaulters (higher recall on class 1) at the cost of more false positives, a trade-off that is acceptable in credit risk since missing a defaulter is far more costly than rejecting a good customer.
 
-### Phase 8 — Credit Scorecard Scaling
+### Phase 8 - Credit Scorecard Scaling
 
 Logistic regression probabilities converted to a credit score on a 300–850 scale using the industry-standard PDO (Points to Double the Odds) formula:
 Score = Offset + Factor × log-odds
@@ -116,11 +116,11 @@ Offset = Base Score − Factor × ln(Base Odds)   [Base Score = 600]
 
 A Kolmogorov-Smirnov test was applied to verify the distributional properties of the assigned scores.
 
-### Phase 9 — PSI (Model Monitoring)
+### Phase 9 - PSI (Model Monitoring)
 
 Population Stability Index compares predicted probability distributions between training and test populations to detect model drift.
 
-## What Changed from Version 1 — and Why
+## What Changed from Version 1 and Why
 
 ### 1. Missing value imputation: median → 5% trimmed mean
 **Why:** Columns like `annual_inc` and `revol_bal` contain extreme outliers (some borrowers report very high incomes). The regular mean is pulled upward by these extremes, producing unrealistic fill values. The trimmed mean removes the top and bottom 2.5% of values before averaging, giving a more representative central estimate without discarding as much information as the median.
@@ -132,7 +132,7 @@ Population Stability Index compares predicted probability distributions between 
 **Why:** Logistic regression assumes linear relationships between WoE-encoded features and default probability. XGBoost makes no such assumption — it builds decision trees that can capture complex non-linear patterns. Running XGBoost on raw features (without WoE encoding) allows it to find its own optimal splits, which is why it achieves a higher AUC (0.71 vs 0.69).
 
 ### 4. Two separate encoding strategies
-**Why:** WoE encoding is kept for Logistic Regression because it enforces the monotonic relationships that logistic regression requires and is an industry-standard approach used by real banks and regulators. XGBoost uses Label Encoding on raw features because it is a tree-based model that does not require monotonicity — constraining it with WoE bins actually limits its performance.
+**Why:** WoE encoding is kept for Logistic Regression because it enforces the monotonic relationships that logistic regression requires and is an industry-standard approach used by real banks and regulators. XGBoost uses Label Encoding on raw features because it is a tree-based model that does not require monotonicity, constraining it with WoE bins actually limits its performance.
 
 ## Key Results
 
@@ -163,7 +163,7 @@ python credit_risk.py
 
 - Data leakage prevention in feature selection
 - Robust missing value imputation (trimmed mean)
-- Feature engineering — ratio features, binary flags, seasonality
+- Feature engineering - ratio features, binary flags, seasonality
 - Weight of Evidence (WoE) and Information Value (IV)
 - Logistic regression with WoE encoding (industry standard)
 - XGBoost with raw features and class imbalance handling
